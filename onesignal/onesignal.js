@@ -66,6 +66,12 @@ module.exports = function (RED) {
       } else {
         messageJson.include_player_ids = playerId;
       }
+      
+      // Send notifications based on filters (https://documentation.onesignal.com/reference#section-send-to-users-based-on-filters) 
+      if (!(msg.payload.filters == null && msg.payload.filters == undefined)) {
+        messageJson.filters = msg.payload.filters;
+      }
+      
       console.log('OneSignal Message:- ', messageJson);
       req.write(JSON.stringify(messageJson));
       req.end();
